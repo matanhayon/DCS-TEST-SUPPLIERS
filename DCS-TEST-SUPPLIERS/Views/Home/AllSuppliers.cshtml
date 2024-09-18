@@ -1,0 +1,97 @@
+﻿@model IEnumerable<DCS_TEST_SUPPLIERS.Models.Supplier>
+
+@{
+    ViewData["Title"] = "All Suppliers";
+}
+
+<h1>All Suppliers</h1>
+
+<!-- Success Message -->
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<!-- Error Message Modal (Popup) -->
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @TempData["ErrorMessage"]
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Suppliers Table -->
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Manager Name</th>
+            <th>Manager Phone Number</th>
+            <th>Create Date</th>
+            <th>Supplier Type</th>
+            <th>Extra Details</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.ManagerName)</td>
+                <td>@Html.DisplayFor(modelItem => item.ManagerPhoneNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreateDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.SupplierType)</td>
+                <td>
+                    @{
+                        if (item is DCS_TEST_SUPPLIERS.Models.Hotel hotel)
+                        {
+                            <span>Chain Name: @hotel.ChainName</span>
+                        }
+                        else if (item is DCS_TEST_SUPPLIERS.Models.Flight flight)
+                        {
+                            <span>Carrier Name: @flight.CarrierName</span>
+                        }
+                        else if (item is DCS_TEST_SUPPLIERS.Models.Attraction attraction)
+                        {
+                            <span>Max Tickets Allowed: @attraction.MaxTicketsAllowed</span>
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-action="SendAllSuppliers" method="post">
+    <button type="submit" class="btn btn-primary mb-3">Send Suppliers to Web Service</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        if ($('#errorModal').length) {
+            $('#errorModal').modal('show');
+        }
+    });
+</script>

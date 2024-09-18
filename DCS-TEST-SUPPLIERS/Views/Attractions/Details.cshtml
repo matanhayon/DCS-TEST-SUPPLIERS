@@ -1,0 +1,47 @@
+﻿@model DCS_TEST_SUPPLIERS.Models.Attraction
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Attraction Supplier</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="col-sm-2">Max Tickets Allowed</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaxTicketsAllowed)
+        </dd>
+        <dt class="col-sm-2">Manager Name</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ManagerName)
+        </dd>
+
+        <dt class="col-sm-2">Manager Phone Number</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ManagerPhoneNumber)
+        </dd>
+
+        <dt class="col-sm-2">Create Date</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt class="col-sm-2">Supplier Type</dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SupplierType)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

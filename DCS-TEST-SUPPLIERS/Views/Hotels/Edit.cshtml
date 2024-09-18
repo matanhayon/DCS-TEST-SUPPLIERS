@@ -1,0 +1,69 @@
+﻿@model DCS_TEST_SUPPLIERS.Models.Hotel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Hotel Supplier</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ChainName" class="control-label">Chain Name</label>
+                <input asp-for="ChainName" class="form-control" />
+                <span asp-validation-for="ChainName" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ManagerName" class="control-label">Manager Name</label>
+                <input asp-for="ManagerName" class="form-control" />
+                <span asp-validation-for="ManagerName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ManagerPhoneNumber" class="control-label">Manager Phone Number</label>
+                <input asp-for="ManagerPhoneNumber" class="form-control" />
+                <span asp-validation-for="ManagerPhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CreateDate" class="control-label">Create Date</label>
+                <input asp-for="CreateDate" class="form-control" type="date" />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SupplierType" class="control-label">Supplier Type</label>
+                <input asp-for="SupplierType" class="form-control" />
+                <span asp-validation-for="SupplierType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

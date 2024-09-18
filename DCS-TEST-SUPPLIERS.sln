@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCS-TEST-SUPPLIERS", "DCS-TEST-SUPPLIERS\DCS-TEST-SUPPLIERS.csproj", "{A1499E63-4162-43E5-886D-19688390C62D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1499E63-4162-43E5-886D-19688390C62D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1499E63-4162-43E5-886D-19688390C62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1499E63-4162-43E5-886D-19688390C62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1499E63-4162-43E5-886D-19688390C62D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A48E9296-AD5C-43B9-8AA0-377F9EF3D218}
+	EndGlobalSection
+EndGlobal
