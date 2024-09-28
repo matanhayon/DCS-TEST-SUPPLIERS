@@ -57,21 +57,21 @@ namespace DCS_TEST_SUPPLIERS.Controllers
             var suppliers = await GetSuppliersAsync();
 
             var supplierDetailsList = suppliers.Select(s => new SupplierDetails
-            {
-                Id = s.Id,
-                Name = s.Name,
-                ManagerName = s.ManagerName,
-                ManagerPhoneNumber = s.ManagerPhoneNumber,
-                CreateDate = s.CreateDate.ToString("yyyy-MM-dd"),
-                SupplierType = s.SupplierType,
-                ExtraDetails = s is Hotel hotel ? $"Chain Name: {hotel.ChainName}" :
-                             s is Flight flight ? $"Carrier Name: {flight.CarrierName}" :
-                             s is Attraction attraction ? $"Max Tickets Allowed: {attraction.MaxTicketsAllowed}" : ""
-            }).ToList();
+                                                                {
+                                                                    Id = s.Id,
+                                                                    Name = s.Name,
+                                                                    ManagerName = s.ManagerName,
+                                                                    ManagerPhoneNumber = s.ManagerPhoneNumber,
+                                                                    CreateDate = s.CreateDate.ToString("yyyy-MM-dd"),
+                                                                    SupplierType = s.SupplierType,
+                                                                    ExtraDetails = s is Hotel hotel ? $"Chain Name: {hotel.ChainName}" :
+                                                                        s is Flight flight ? $"Carrier Name: {flight.CarrierName}" :
+                                                                        s is Attraction attraction ? $"Max Tickets Allowed: {attraction.MaxTicketsAllowed}" : ""
+                                                                }).ToList();
 
             var xmlContent = ConvertToXmlContent(candidateFullName, supplierDetailsList);
             Console.WriteLine(xmlContent);
-            await PostXmlDataAsync("http://tempuri.org/GetSuppliersDetails", xmlContent);
+            await PostXmlDataAsync("http://web27.agency2000.co.il/Test/TestService.asmx", xmlContent);
         }
 
 
@@ -79,7 +79,13 @@ namespace DCS_TEST_SUPPLIERS.Controllers
         {
             var sb = new StringBuilder();
 
-            sb.Append("<GetSuppliersDetails>");
+            sb.Append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            sb.Append("<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" ");
+            sb.Append("xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" ");
+            sb.Append("xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">");
+            sb.Append("<soap12:Body>");
+
+            sb.Append("<GetSuppliersDetails xmlns=\"http://tempuri.org/\">");
             sb.AppendFormat("<CandidateFullName>{0}</CandidateFullName>", candidateFullName);
 
             foreach (var sd in supplierDetailsList)
@@ -96,6 +102,8 @@ namespace DCS_TEST_SUPPLIERS.Controllers
             }
 
             sb.Append("</GetSuppliersDetails>");
+            sb.Append("</soap12:Body>");
+            sb.Append("</soap12:Envelope>");
 
             return sb.ToString();
         }
@@ -106,17 +114,28 @@ namespace DCS_TEST_SUPPLIERS.Controllers
             {
                 try
                 {
-                    var content = new StringContent(xmlContent, Encoding.UTF8, "application/xml");
+                    var content = new StringContent(xmlContent, Encoding.UTF8, "application/soap+xml");  // Use 'application/soap+xml' for SOAP 1.2
                     Console.WriteLine("XML content: " + xmlContent);
 
                     var response = await httpClient.PostAsync(url, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("Success: " + response.StatusCode);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: " + response.StatusCode);
+                        var errorResponse = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Error details: " + errorResponse);
+                    }
 
                     response.EnsureSuccessStatusCode();
                 }
                 catch (HttpRequestException ex)
                 {
                     _logger.LogError($"Error occurred while sending data: {ex.Message}");
-                    
+
                     throw new ApplicationException("There was an error sending the supplier details. Please try again later.");
                 }
             }
